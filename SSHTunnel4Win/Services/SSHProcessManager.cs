@@ -303,13 +303,23 @@ public class SSHProcessManager
         Disconnect(id);
     }
 
-    public void ReconnectAll()
+    /// <summary>Connects every disconnected tunnel, leaving live sessions untouched
+    /// (Connect returns early for tunnels that are already active).</summary>
+    public void ConnectAll(IEnumerable<SSHTunnelConfig> configs)
     {
-        foreach (var (id, config) in _reconnectConfigs.ToList())
-        {
-            if (_status.GetState(id).IsActive())
-                Reconnect(config);
-        }
+        // 연결 가능 판정은 모델의 IsConnectable 사용 (트레이 개별 항목·상세 화면과 같은 기준)
+        foreach (var config in configs.Where(c => c.IsConnectable))
+            Connect(config);
+    }
+
+    /// <summary>Connects every configured tunnel: disconnected ones are started,
+    /// active ones are dropped and started again. Tunnels waiting on the auto-reconnect
+    /// backoff are retried immediately (Connect cancels their pending timer).</summary>
+    public void ReconnectAll(IEnumerable<SSHTunnelConfig> configs)
+    {
+        // 미완성 터널은 Reconnect→Connect 에서 ssh 오류만 나므로 제외
+        foreach (var config in configs.Where(c => c.IsConnectable))
+            Reconnect(config);
     }
 
     // Auto-reconnect helpers

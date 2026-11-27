@@ -194,7 +194,8 @@ public partial class MainWindow : Window
         dialog.ShowDialog();
     }
 
-    private void ReconnectAllClick(object sender, RoutedEventArgs e) => _vm.ProcessManager.ReconnectAll();
+    // 트레이 메뉴와 같은 기준으로 연결 가능한 전체 터널을 재연결
+    private void ReconnectAllClick(object sender, RoutedEventArgs e) => _vm.ProcessManager.ReconnectAll(_vm.ConfigStore.Configs);
 
     private void DisconnectAllClick(object sender, RoutedEventArgs e) => _vm.DisconnectAllCommand.Execute(null);
 

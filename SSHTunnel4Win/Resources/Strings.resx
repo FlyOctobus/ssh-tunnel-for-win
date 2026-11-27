@@ -91,6 +91,9 @@
   <data name="Connect" xml:space="preserve">
     <value>Connect</value>
   </data>
+  <data name="ConnectAll" xml:space="preserve">
+    <value>Connect All</value>
+  </data>
   <data name="ConnectAnyway" xml:space="preserve">
     <value>Connect Anyway</value>
   </data>

@@ -47,6 +47,7 @@ public static class Strings
     public static string Close => ResourceManager.GetString("Close") ?? "";
     public static string Command => ResourceManager.GetString("Command") ?? "";
     public static string Connect => ResourceManager.GetString("Connect") ?? "";
+    public static string ConnectAll => ResourceManager.GetString("ConnectAll") ?? "";
     public static string ConnectAnyway => ResourceManager.GetString("ConnectAnyway") ?? "";
     public static string Connected => ResourceManager.GetString("Connected") ?? "";
     public static string Connecting => ResourceManager.GetString("Connecting") ?? "";

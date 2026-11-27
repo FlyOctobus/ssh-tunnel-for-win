@@ -91,6 +91,9 @@
   <data name="Connect" xml:space="preserve">
     <value>연결</value>
   </data>
+  <data name="ConnectAll" xml:space="preserve">
+    <value>모두 연결</value>
+  </data>
   <data name="ConnectAnyway" xml:space="preserve">
     <value>그래도 연결</value>
   </data>

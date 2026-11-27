@@ -225,9 +225,22 @@ public partial class App : Application
         if (_vm.ConfigStore.Configs.Count > 0)
             menu.Items.Add(new Separator());
 
-        // Reconnect All
-        var reconnectAllItem = new MenuItem { Header = Strings.ReconnectAll, IsEnabled = anyActive };
-        reconnectAllItem.Click += (_, _) => _vm.ProcessManager.ReconnectAll();
+        // Connect All: 연결 가능하면서 아직 끊겨 있는 터널이 하나라도 있을 때만 활성화
+        var connectAllItem = new MenuItem
+        {
+            Header = Strings.ConnectAll,
+            IsEnabled = _vm.ConfigStore.Configs.Any(c => c.IsConnectable && !_vm.Status.GetState(c.Id).IsActive())
+        };
+        connectAllItem.Click += (_, _) => _vm.ProcessManager.ConnectAll(_vm.ConfigStore.Configs);
+        menu.Items.Add(connectAllItem);
+
+        // Reconnect All: 활성 터널만이 아니라 연결 가능한 전체가 대상이라 anyActive 대신 IsConnectable 로 활성화
+        var reconnectAllItem = new MenuItem
+        {
+            Header = Strings.ReconnectAll,
+            IsEnabled = _vm.ConfigStore.Configs.Any(c => c.IsConnectable)
+        };
+        reconnectAllItem.Click += (_, _) => _vm.ProcessManager.ReconnectAll(_vm.ConfigStore.Configs);
         menu.Items.Add(reconnectAllItem);
 
         // Disconnect All
